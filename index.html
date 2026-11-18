@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RoboBuilder: Agentic Robot Co-Design with Real-world Video Feedback in the Loop</title>
+  <meta name="description" content="Can AI agents design robots that work in the real world? Coding agents co-design robots and their programs in a learned simulator; every simulated pass is built by hand and tested on a physical course, and videos of real failures drive a simulator update and a redesign.">
+  <meta name="keywords" content="RoboBuilder, robot co-design, coding agents, sim-to-real, benchmark, Claude Code, Codex, MuJoCo, 3D printing, hardware in the loop">
+  <meta name="author" content="Ghadi Nehme, Dahyun Nam, Akshay Govind Srinivasan, Faez Ahmed">
+  <meta name="theme-color" content="#0b0e13">
+  <link rel="canonical" href="https://ghadinehme.com/robobuilder.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ghadinehme.com/robobuilder.github.io/">
+  <meta property="og:title" content="RoboBuilder: Agentic Robot Co-Design with Real-world Video Feedback in the Loop">
+  <meta property="og:description" content="Can AI agents design robots that work in the real world? Four coding agents, 16,427 simulations, 135 robots built by hand, and a video-in-the-loop redesign that removes 72% of level-1 and level-2 real failures.">
+  <meta property="og:image" content="https://ghadinehme.com/robobuilder.github.io/static/images/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RoboBuilder: Agentic Robot Co-Design with Real-world Video Feedback in the Loop">
+  <meta name="twitter:description" content="Coding agents co-design robots in simulation; every simulated pass is built and tested for real, and videos of real failures drive the redesign.">
+  <meta name="twitter:image" content="https://ghadinehme.com/robobuilder.github.io/static/images/og.jpg">
+  <link rel="icon" type="image/png" href="./static/images/icon.png">
+  <link rel="apple-touch-icon" href="./static/images/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/site.css?v=20261117b">
+  <script>try{var t=localStorage.getItem('rb-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <script defer src="./static/js/icons.js?v=20261117b"></script>
+  <script defer src="./assets/js/data.js?v=20261117b"></script>
+  <script defer src="./assets/js/map.js?v=20261117b"></script>
+  <script defer src="./static/js/site.js?v=20261117b"></script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- MORE WORKS -->
+<div class="more-works-container" id="moreWorks">
+  <button class="more-works-btn" id="moreWorksBtn" aria-expanded="false" aria-controls="moreWorksDropdown">
+    <i class="fas fa-flask"></i>
+    More Works
+    <i class="fas fa-chevron-down dropdown-arrow"></i>
+  </button>
+  <div class="more-works-dropdown" id="moreWorksDropdown">
+    <div class="dropdown-header">
+      <h4>More Works</h4>
+      <button class="close-btn" id="moreWorksClose" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="works-list">
+      <a href="https://ghadinehme.com/videocad.github.io/" class="work-item">
+        <div class="work-info">
+          <h5>VideoCAD: A Dataset and Model for Learning Long-Horizon 3D CAD UI Interactions from Video</h5>
+          <p class="work-venue">NeurIPS 2025</p>
+        </div>
+        <i class="fas fa-external-link-alt"></i>
+      </a>
+      <a href="https://ghadinehme.com/cadfit.github.io/" class="work-item">
+        <div class="work-info">
+          <h5>CADFit: Precise Mesh-to-CAD Program Generation with Hybrid Optimization</h5>
+          <p class="work-venue">ICML 2026</p>
+        </div>
+        <i class="fas fa-external-link-alt"></i>
+      </a>
+      <a href="https://ghadinehme.com/lamp.github.io/" class="work-item">
+        <div class="work-info">
+          <h5>LAMP: Data-Efficient Linear Affine Weight-Space Models for Parameter-Controlled 3D Shape Generation and Extrapolation</h5>
+          <p class="work-venue">ICML 2026</p>
+        </div>
+        <i class="fas fa-external-link-alt"></i>
+      </a>
+      <a href="https://ghadinehme.com/stepcad.github.io/" class="work-item">
+        <div class="work-info">
+          <h5>StepCAD: Mesh-to-CAD Code Generation via LLM Policy and Geometry-Guided Search</h5>
+          <p class="work-venue">arXiv 2026</p>
+        </div>
+        <i class="fas fa-external-link-alt"></i>
+      </a>
+      <a href="https://ghadinehme.com/publications.html" class="work-item all-pubs">
+        <div class="work-info">
+          <h5>All research papers by Ghadi Nehme</h5>
+          <p class="work-venue">ghadinehme.com/publications</p>
+        </div>
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="topnav" id="topnav" aria-label="Sections">
+  <a class="brand" href="#top"><img src="./static/images/icon.png" alt="" width="22" height="22">Robo<b>Builder</b></a>
+  <div class="navlinks" id="navlinks">
+    <a href="#bench">Benchmark</a>
+    <a href="#loop">Loop</a>
+    <a href="#real">Real world</a>
+    <a href="#allinone">All-in-one</a>
+    <a href="#explorer">Explorer</a>
+    <a href="#bibtex">Cite</a>
+  </div>
+  <button class="theme-btn" id="themeBtn" aria-label="Toggle light or dark theme" title="Light / dark"><i class="fas fa-adjust"></i></button>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <h1 class="hero-title"><span class="wordmark">RoboBuilder</span><span class="subtitle">Agentic Robot Co-Design<br>with Real-world Video Feedback in the Loop</span></h1>
+    <div class="authors">
+      <span><a href="https://ghadinehme.com/" target="_blank" rel="noopener">Ghadi Nehme</a></span>
+      <span>Dahyun Nam</span>
+      <span>Akshay Govind Srinivasan</span>
+      <span><a href="https://decode.mit.edu/" target="_blank" rel="noopener">Faez Ahmed</a></span>
+    </div>
+    <p class="affil">Department of Mechanical Engineering, Massachusetts Institute of Technology</p>
+    <div class="links">
+      <a class="btn soon" href="#" aria-disabled="true" title="Paper coming soon" onclick="return false"><i class="fas fa-file-pdf"></i><span>Paper</span><em>soon</em></a>
+      <a class="btn soon" href="#" aria-disabled="true" title="arXiv link coming soon" onclick="return false"><span class="ax">arXiv</span><em>soon</em></a>
+      <a class="btn" href="https://github.com/ghadinehme/RoboBuilder" target="_blank" rel="noopener"><i class="fab fa-github"></i><span>Code</span></a>
+      <a class="btn" href="https://huggingface.co/datasets/DeCoDELab/RoboBuilder" target="_blank" rel="noopener"><i class="fas fa-database"></i><span>Dataset</span></a>
+      <a class="btn" href="#bibtex"><i class="fas fa-quote-right"></i><span>BibTeX</span></a>
+    </div>
+
+    <p class="hero-q">Can AI agents design robots that work <em>in the real world</em>?</p>
+
+    <div class="stats" role="list">
+      <div class="stat" role="listitem"><b data-count="16427">16,427</b><span>simulations</span></div>
+      <div class="stat" role="listitem"><b data-count="12774">12,774</b><span>robots designed</span></div>
+      <div class="stat" role="listitem"><b data-count="135">135</b><span>robots built by hand</span></div>
+      <div class="stat" role="listitem"><b data-count="66" data-suffix="%">66%</b><span>of simulated passes hold for real</span></div>
+      <div class="stat hl" role="listitem"><b data-count="72" data-suffix="%">72%</b><span>of level-1/2 real failures removed by the loop</span></div>
+    </div>
+  </div>
+
+  <div class="wall" id="heroWall" aria-label="Agent-designed robots crossing their real courses, each with its simulation inset"></div>
+  <p class="wall-cap">Designed in simulation by a coding agent, then built and tested on the real course. <span class="nowrap">Inset: the simulation. Tap to swap.</span></p>
+</header>
+
+<main id="main">
+
+<!-- TICKER (TL;DR) -->
+<section class="ticker" id="tldr" aria-label="Key results">
+  <div class="tk-stage" id="tkStage" aria-live="polite">
+    <div class="tk-num" id="tkNum">98%</div>
+    <div class="tk-line" id="tkLine">of level-1 tasks solved by agents. <span>Search baselines: 0%.</span></div>
+  </div>
+  <div class="tk-dots" id="tkDots" role="tablist" aria-label="Key result"></div>
+</section>
+
+<!-- BENCHMARK + LEADERBOARD -->
+<section class="section" id="bench">
+  <div class="wrap">
+    <h2 class="sec-h"><span class="sec-no">01</span>Benchmark</h2>
+    <p class="lede">Ten obstacles, three levels, one parts bin. Each agent designs a robot <em>and</em> its open-loop motor program; the robot must reach the goal in time and stay upright for 5&nbsp;s.</p>
+
+    <div class="lvl-switch" role="tablist" aria-label="Obstacle level">
+      <button role="tab" class="on" data-l="1" aria-selected="true">Level 1</button>
+      <button role="tab" data-l="2" aria-selected="false">Level 2</button>
+      <button role="tab" data-l="3" aria-selected="false">Level 3</button>
+      <span class="lvl-key" id="lvlKey"></span>
+    </div>
+    <div class="obst-row" id="obstGrid"></div>
+
+    <div class="kit">
+      <div class="kit-parts" aria-hidden="true">
+        <img src="./assets/img/parts/p00.webp" alt="" loading="lazy"><img src="./assets/img/parts/p01.webp" alt="" loading="lazy"><img src="./assets/img/parts/p02.webp" alt="" loading="lazy"><img src="./assets/img/parts/p03.webp" alt="" loading="lazy"><img src="./assets/img/parts/p05.webp" alt="" loading="lazy"><img src="./assets/img/parts/p06.webp" alt="" loading="lazy"><img src="./assets/img/parts/p07.webp" alt="" loading="lazy"><img src="./assets/img/parts/p08.webp" alt="" loading="lazy"><img src="./assets/img/parts/p10.webp" alt="" loading="lazy"><img src="./assets/img/parts/p12.webp" alt="" loading="lazy"><img src="./assets/img/parts/p13.webp" alt="" loading="lazy"><img src="./assets/img/parts/p15.webp" alt="" loading="lazy">
+      </div>
+      <div class="kit-facts">
+        <div><b>132</b><span>part types, ~3,000 in stock, motors included</span></div>
+        <div><b class="or">+1</b><span>custom part the agent writes as CAD code; we 3D-print it</span></div>
+        <div><b>10<sup>68</sup></b><span>possible assemblies of just 25 pieces</span></div>
+      </div>
+    </div>
+
+    <div class="tasks-row" aria-label="Tasks per agent">
+      <span class="tg cross">Cross<small>30 sims</small></span><i class="fas fa-chevron-right" aria-hidden="true"></i>
+      <span class="tg print">+Print<small>+30 sims</small></span><i class="fas fa-chevron-right" aria-hidden="true"></i>
+      <span class="tg light">Light<small>50 sims</small></span>
+      <span class="tg fast">Fast<small>50 sims</small></span>
+      <span class="tg all">All-in-one<small>1 robot, 10 courses</small></span>
+    </div>
+
+    <div class="lb-head">
+      <h3 class="h3big">Leaderboard</h3>
+      <div class="lb-tabs" role="tablist" aria-label="Leaderboard view">
+        <button role="tab" class="on" data-v="sim" aria-selected="true">Simulation</button>
+        <button role="tab" data-v="real" aria-selected="false">Real world</button>
+        <label class="chk"><input type="checkbox" id="lbBase" checked> baselines</label>
+      </div>
+    </div>
+    <div class="lb-scroll"><table class="lb" id="lb"></table></div>
+    <p class="cap" id="lbCap"></p>
+  </div>
+</section>
+
+<!-- THE LOOP -->
+<section class="section alt" id="loop">
+  <div class="wrap">
+    <h2 class="sec-h"><span class="sec-no">02</span>The loop</h2>
+    <p class="lede">Every robot that passes in simulation is built and tested on the real course. Every real failure goes back to the agent as a video.</p>
+    <div class="flow" id="flow"></div>
+    <div class="simfacts">
+      <div><b>0 / 15</b><span>early sim passes that crossed for real, with public part data</span></div>
+      <div><b>4.5&nbsp;N&middot;mm</b><span>measured friction-pin hold, not the assumed 24.5</span></div>
+      <div><b>92%</b><span>of labelled real runs predicted once the agent learned the simulator from video</span></div>
+      <div><b>&le;&nbsp;2</b><span>parameters an agent may change per failure, kept only if the old design then fails as filmed</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- REAL WORLD: hold, fail, fix -->
+<section class="section" id="real">
+  <div class="wrap">
+    <h2 class="sec-h"><span class="sec-no">03</span>Real world</h2>
+    <p class="lede">Two in three simulated passes also cross the real course. Shown a video of its failure, the agent fixes most of the rest.</p>
+    <div class="story">
+      <div class="st-col">
+        <p class="st-k"><span>1</span>Built from the simulated design</p>
+        <div class="bars" id="realBars"></div>
+        <div class="effort">
+          <div><b>135</b><span>robots built by hand</span></div>
+          <div><b>~13k</b><span>pieces</span></div>
+          <div><b>~240&nbsp;h</b><span>estimated building and testing</span></div>
+          <div><b>461</b><span>real videos, each paired with its simulation</span></div>
+        </div>
+      </div>
+      <div class="st-col">
+        <p class="st-k"><span>2</span>How the rest fail</p>
+        <div class="fail-grid" id="failGrid"></div>
+      </div>
+    </div>
+    <p class="st-k st3"><span>3</span>The agent watches its failure and redesigns</p>
+    <div class="loop-tabs" id="loopTabs" role="tablist" aria-label="Loop case"></div>
+    <div class="loop-case" id="loopCase"></div>
+    <div class="after">
+      <div class="after-kpi"><b>72%</b><span>of level-1/2 real failures removed in one round</span></div>
+      <div class="dumbbell" id="dumbbell"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ALL IN ONE -->
+<section class="section alt" id="allinone">
+  <div class="wrap">
+    <h2 class="sec-h"><span class="sec-no">04</span>All-in-one</h2>
+    <p class="lede">One robot for all ten obstacles crosses at most six of them. Bumps want clearance, the bridge a narrow track, the rope a light chassis hung from a cord. No single robot does it all.</p>
+    <div class="allin" id="allin"></div>
+    <div class="allin-player" id="allinPlayer" hidden>
+      <video id="allinVid" muted playsinline loop preload="none"></video>
+      <div class="allin-meta" id="allinMeta"></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORER (design map + sim | real) -->
+<section class="section" id="explorer">
+  <div class="wrap wide">
+    <h2 class="sec-h"><span class="sec-no">05</span>Explorer</h2>
+    <p class="lede">Thousands of agent-designed robots on one map. Each dot is an agent design, placed by how it looks. Ringed dots were built: open one to watch it in simulation and on the real course.</p>
+    <div class="ex" id="ex">
+      <div class="ex-left">
+        <div class="ex-bar">
+          <div class="seg" id="colorBy" role="radiogroup" aria-label="Colour by">
+            <button type="button" data-c="bench" class="on" role="radio" aria-checked="true">Obstacle</button>
+            <button type="button" data-c="agent" role="radio" aria-checked="false">Agent</button>
+            <button type="button" data-c="pass" role="radio" aria-checked="false">Sim result</button>
+          </div>
+          <div class="zoom">
+            <button type="button" id="zIn" aria-label="Zoom in">+</button><button type="button" id="zOut" aria-label="Zoom out">&minus;</button><button type="button" id="zReset" aria-label="Reset view"><i class="fas fa-expand"></i></button>
+          </div>
+        </div>
+        <div class="map" id="map">
+          <canvas id="mapCanvas" role="img" aria-label="Map of agent designs, coloured by the selected property; built robots are ringed"></canvas>
+          <div class="tip" id="tip" hidden></div>
+          <div class="legend" id="legend"></div>
+        </div>
+        <p class="hint">Hover or tap a dot &middot; drag to pan &middot; click the map, then scroll to zoom &middot; pinch on touch</p>
+        <div class="filters" id="filters">
+          <div class="frow"><span class="flab">Obstacle</span><div class="chips" data-f="bench"></div></div>
+          <div class="frow"><span class="flab">Level</span><div class="chips" data-f="level"></div></div>
+          <div class="frow"><span class="flab">Agent</span><div class="chips" data-f="agent"></div></div>
+          <div class="frow"><span class="flab">Show</span><div class="chips" data-f="built"></div></div>
+        </div>
+      </div>
+      <aside class="ex-right" id="detail" aria-live="polite">
+        <div class="d-head" id="dHead"></div>
+        <div class="d-media">
+          <div class="d-pane"><span class="pill sim">Simulation</span><div class="vbox"><video id="vSim" muted playsinline loop preload="none"></video><img id="dImg" alt="" hidden></div></div>
+          <div class="d-pane" id="dRealPane"><span class="pill real">Real</span><span class="verdict" id="vVerdict"></span><div class="vbox"><video id="vReal" muted playsinline loop preload="none"></video></div></div>
+        </div>
+        <div class="d-meta" id="dMeta"></div>
+        <label class="d-pick"><span>Built robots</span><select id="dSelect"></select></label>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- FILMSTRIP -->
+<section class="film" aria-label="Some of the 135 robots we built">
+  <div class="film-track" id="film"></div>
+</section>
+
+<!-- BIBTEX -->
+<section class="section" id="bibtex">
+  <div class="wrap narrow">
+    <h2 class="sec-h">BibTeX</h2>
+    <div class="bib-wrap">
+      <button class="copy-btn" id="copyBib"><i class="far fa-copy"></i><span>Copy</span></button>
+      <pre><code id="bibText">@article{nehme2026robobuilder,
+  title={RoboBuilder: Agentic Robot Co-Design with Real-world Video Feedback in the Loop},
+  author={Nehme, Ghadi and Nam, Dahyun and Srinivasan, Akshay Govind and Ahmed, Faez},
+  journal={arXiv preprint},
+  year={2026}
+}</code></pre>
+    </div>
+    <p class="fine"><b>Scope.</b> The simulator is fitted from a fixed camera and bench tests, so not every parameter is identifiable; each loop correction is fitted to one failure; Light and Fast designs were not built. We release the simulator, courses, designs, simulations and 461 paired real videos.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="icons">
+    <a href="https://github.com/ghadinehme/RoboBuilder" aria-label="Code on GitHub"><i class="fab fa-github"></i></a>
+    <a href="https://huggingface.co/datasets/DeCoDELab/RoboBuilder" aria-label="Dataset"><i class="fas fa-database"></i></a>
+    <a href="https://ghadinehme.com/" aria-label="Ghadi Nehme's homepage"><i class="fas fa-home"></i></a>
+  </div>
+  <p>MIT DeCoDE Lab &middot; Department of Mechanical Engineering, Massachusetts Institute of Technology</p>
+  <p class="small">&copy; 2026. Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p>
+</footer>
+</body>
+</html>
