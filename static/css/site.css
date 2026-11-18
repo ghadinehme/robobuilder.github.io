@@ -168,10 +168,11 @@ body.scrolled .more-works-btn { padding: .45rem 1rem; }
 .lvl-key { margin-left: auto; display: flex; gap: 12px; flex-wrap: wrap; font-size: .78rem; color: var(--mute); }
 .lvl-key i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: 0; }
 .obst-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-.ob { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16/10; background: var(--stage2); }
-.ob img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease), filter .4s; }
+.ob { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 16/10; background: radial-gradient(ellipse at 50% 40%, #f4f2ee 0%, #dcd8d0 100%); }
+.ob img { width: 100%; height: 100%; object-fit: contain; transition: transform .6s var(--ease), filter .4s; }
+.ob .on small { font-weight: 500; opacity: .85; margin-left: .45em; font-size: .82rem; font-variant-numeric: tabular-nums; }
 .ob:hover img { transform: scale(1.05); }
-.ob::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(8,10,14,.82)); }
+.ob::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 62%, rgba(8,10,14,.72)); }
 .ob .on { position: absolute; left: 10px; bottom: 9px; z-index: 2; color: #fff; font-weight: 600; font-size: .95rem; }
 .ob .ad { position: absolute; right: 10px; bottom: 12px; z-index: 2; display: flex; gap: 4px; }
 .ob .ad i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.18); border: 1.5px solid rgba(255,255,255,.35); transition: background .3s, border-color .3s; }
@@ -426,3 +427,10 @@ svg.ico.fa-chevron-right { width: .6em; color: var(--line2); }
 .hint { font-size: .76rem; color: var(--mute); margin: 8px 0 0; }
 
 .fl .fn { display: none; }
+
+/* brick wordmark */
+.wordmark.is-bricks { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: inherit; line-height: 0; }
+.wordmark .bricks { display: block; width: min(92vw, 640px); height: auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,.35)); }
+.wordmark .bricks.anim .bk { animation: brickIn .5s cubic-bezier(.2,.9,.3,1.25) both; animation-delay: var(--d); }
+@keyframes brickIn { from { transform: translateY(-14px); opacity: 0; } to { transform: none; opacity: 1; } }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

@@ -11,6 +11,52 @@
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches || /[?&]static\b/.test(location.search);
   const io = (fn, opt) => ('IntersectionObserver' in window ? new IntersectionObserver(fn, opt) : null);
 
+  /* ---------------- wordmark built from bricks ---------------- */
+  (function bricks() {
+    const wm = document.getElementById('wordmark');
+    if (!wm) return;
+    // 7-row bitmap glyphs; each horizontal run of cells becomes bricks (at most 4 studs long)
+    const G = {
+      R: ['11110', '10001', '10001', '11110', '10100', '10010', '10001'],
+      o: ['0000', '0000', '0110', '1001', '1001', '1001', '0110'],
+      b: ['1000', '1000', '1110', '1001', '1001', '1001', '1110'],
+      B: ['11110', '10001', '10001', '11110', '10001', '10001', '11110'],
+      u: ['0000', '0000', '1001', '1001', '1001', '1001', '0111'],
+      i: ['1', '0', '1', '1', '1', '1', '1'],
+      l: ['1', '1', '1', '1', '1', '1', '1'],
+      d: ['0001', '0001', '0111', '1001', '1001', '1001', '0111'],
+      e: ['0000', '0000', '0110', '1001', '1111', '1000', '0111'],
+      r: ['0000', '0000', '1011', '1100', '1000', '1000', '1000']
+    };
+    const word = 'RoboBuilder', CW = 10, CH = 12, SH = 2.6, GAP = 1;
+    const PAL = { robo: ['#eef1f5', '#d9dee6', '#c6cdd8'], build: ['#f5a742', '#e8902b', '#d57a16', '#ffc98a'] };
+    let x0 = 0, k = 0, svg = '';
+    const parts = [];
+    [...word].forEach((ch, li) => {
+      const g = G[ch], w = g[0].length, pal = li < 4 ? PAL.robo : PAL.build;
+      for (let r = 0; r < 7; r++) {
+        let c = 0;
+        while (c < w) {
+          if (g[r][c] !== '1') { c++; continue; }
+          let n = 0; while (c + n < w && g[r][c + n] === '1' && n < 4) n++;
+          const x = (x0 + c) * CW, y = SH + r * CH, col = pal[(k++ * 7 + r) % pal.length];
+          let studs = '';
+          for (let j = 0; j < n; j++) if (r === 0 || g[r - 1][c + j] !== '1')
+            studs += `<rect x="${x + j * CW + 2.4}" y="${y - SH}" width="${CW - 4.8}" height="${SH + .6}" rx="1" fill="${col}"/>`;
+          parts.push({ r, svg: `<g class="bk" style="--d:${(6 - r) * 70 + li * 25}ms">${studs}<rect x="${x + .5}" y="${y + .5}" width="${n * CW - 1}" height="${CH - 1}" rx="1.4" fill="${col}"/>` +
+            `<rect x="${x + .5}" y="${y + CH - 3}" width="${n * CW - 1}" height="2.5" rx="1" fill="#000" opacity=".16"/></g>` });
+          c += n;
+        }
+      }
+      x0 += w + GAP;
+    });
+    // lowest rows first so the word builds up from the ground
+    parts.sort((a, b) => b.r - a.r).forEach((p) => { svg += p.svg; });
+    const W = (x0 - GAP) * CW, H = 7 * CH + SH;
+    wm.innerHTML = `<span class="sr-only">RoboBuilder</span><svg class="bricks${reduce ? '' : ' anim'}" viewBox="0 0 ${W} ${H}" aria-hidden="true" focusable="false">${svg}</svg>`;
+    wm.classList.add('is-bricks');
+  })();
+
   const AGK = ['opus', 'sonnet', 'astra', 'sol'];
   const AG = {
     opus: { name: 'Opus 5.5', h: 'Claude Code', logo: 'claude', c: '--opus' },
@@ -132,11 +178,18 @@
   if (og) {
     BK.forEach((b, i) => {
       const c = el('div', 'ob');
-      c.innerHTML = `<img src="./assets/img/course/${b}.webp" alt="The real ${BN[b]} course" loading="lazy" width="720" height="405"><span class="on">${BN[b]}</span><span class="ad">${AGK.map(() => '<i></i>').join('')}</span>`;
+      c.innerHTML = `<img src="./assets/img/level/${b}-l1.webp" alt="" loading="lazy" width="720" height="450"><span class="on">${BN[b]}<small></small></span><span class="ad">${AGK.map(() => '<i></i>').join('')}</span>`;
       og.appendChild(c);
     });
+    // obstacle size per level (paper benchmark figure)
+    const DIM = { ramp: ['30°', '46°', '62°'], gap: ['152 mm', '336 mm', '752 mm'], bridge: ['40 mm plank', '24 mm plank', '8 mm plank'],
+      rope: ['0°', '10°', '20°'], steps: ['29 mm', '58 mm', '106 mm'], bumps: ['35 mm', '55 mm', '80 mm'], seesaw: ['15°', '29°', '47°'],
+      gapdrop: ['48 mm', '128 mm', '336 mm'], wall: ['38 mm', '154 mm', '614 mm'], uturn: ['32°', '35°', '38°'] };
     const setL = (L) => {
       $$('.ob', og).forEach((c, i) => {
+        const bb = BK[i], im = $('img', c);
+        im.src = `./assets/img/level/${bb}-l${L}.webp`; im.alt = `${BN[bb]} course, level ${L}`;
+        $('.on small', c).textContent = DIM[bb][L - 1];
         const r = OP[L][i]; $$('.ad i', c).forEach((x, k) => { x.className = r[k] === 1 ? 'y' : (r[k] === 2 ? 'p' : ''); x.title = `${AG[AGK[k]].name}: ${r[k] ? (r[k] === 2 ? 'passes with a printed part' : 'passes') : 'no pass'}`; });
         c.classList.toggle('none', !r.some(Boolean));
         c.setAttribute('aria-label', `${BN[BK[i]]}, level ${L}: ${r.filter(Boolean).length} of 4 agents pass in simulation`);
