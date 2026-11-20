@@ -84,6 +84,8 @@
     if (vio) vio.observe(v); else v.src = src;
     return v;
   };
+  // static lazy videos (the agent's physics-test requests)
+  $$('.meas video[data-src], .meas-rvs video[data-src]').forEach((v) => { if (vio) vio.observe(v); else v.src = v.dataset.src; });
   // real video with its simulation inset; click swaps which one is large
   const mkTile = (id, lab, real, poster) => {
     const t = el('button', 'tile'); t.type = 'button';
